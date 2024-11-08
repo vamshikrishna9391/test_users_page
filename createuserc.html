@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .create_user_main_div{
+            background-color: #000;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+        }
+        .form{
+            background-color:#000 ;
+            /* border: 0.1px solid #fff; */
+            border-radius: 2px 30px 30px 30px;
+            padding: 16px;
+            margin: 10px;
+            box-shadow: 2px 2px 8px;
+        }
+
+        .inputEl_card{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .inputEls{
+            width: 200px;
+            padding: 4px 0 4px 8px;
+            font-size: 10px;
+            color: #000 !important;
+            font-weight: bold;
+            border-radius: 2px;
+            border: 0;
+            outline: none;
+
+        }
+        .inputEl_gender_card{
+            padding: 1px 0 3px 3px;
+            border-radius: 1px 10px 20px 9px;
+            box-shadow: -1px -1px 1px;            
+        }
+
+        .labelEls{
+            font-size: 15px;
+            margin: 0;
+            margin-bottom: 4px;
+        }
+
+        .redioEl_card{
+            display: flex;
+            align-items: center;
+        }
+
+        .radioEl{
+            margin: 0;
+            margin-right: 2px;
+        }
+
+        .genderLEl{
+            font-size: 13px;
+            margin-right: 8px;
+        }
+
+        @media (max-width:300px) {
+            .create_user_main_div{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .form{
+                width: 80%;
+            }
+            .inputEls{
+                width: 95%;
+            }
+        }
+
+        .btns_card{
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        .ancherEl{
+            font-size: 15px;
+            color: #fff;
+            text-align:;
+        }
+
+        .ancherEl:hover{
+            /* background-color: #fff; */
+            color: blue;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="create_user_main_div">
+        <fieldset class="form">
+            <legend>Create User</legend>
+            <form onsubmit="submitDetails()" class="" id="form">
+
+                <div class="inputEl_card">
+                    <!-- <label for="name" class="labelEls">Full Name</label> -->
+                    <input id="name" type="text" class="inputEls" placeholder="Full Name">
+                </div>
+
+                <div class="inputEl_card">
+                    <!-- <label for="userName" class="labelEls">User Name</label> -->
+                    <input id="userName" type="text" class="inputEls" placeholder="User Name">
+                    
+                </div>
+                
+                <div class="inputEl_card">
+                    <!-- <label for="password" class="labelEls">Password</label> -->
+                    <input id="password" type="password" class="inputEls" placeholder="password">
+                    
+                </div>
+
+                <div class="inputEl_card">
+                    <!-- <label for="password" class="labelEls">Password</label> -->
+                    <input id="rePassword" type="password" class="inputEls" placeholder="Re Enter Password">
+                    
+                </div>
+
+                <div class="inputEl_gender_card">
+                    
+                    <p class="labelEls">Select Gender</p>
+
+                    <div class="redioEl_card"> 
+
+                        <input id="male" type="radio" class="radioEl" name="gender" value="male">
+                        <label for="male" class="genderLEl">Male</label>
+
+                        <input id="female" type="radio" class="radioEl" name="gender" value="female">
+                        <label for="female" class="genderLEl">Female</label>
+
+                        <input id="others" type="radio" class="radioEl" name="gender" value="others">
+                        <label for="others" class="genderLEl">Others</label>
+
+                    </div>
+                </div>
+                <div class="btns_card">
+                    <div>
+                        <button class="btn">Reset</button>
+                        <button type="submit" class="btn">Submit</button>
+                    </div>
+                    <!-- <a class="ancherEl" href="http://localhost:3002/">Login</a> -->
+                    <a class="ancherEl" href="https://9947-110-235-224-86.ngrok-free.app/">Login</a>
+                </div>
+
+            </form>
+        </fieldset>
+        <button onclick="get()">click</button>
+    </div>
+    <script type="text/javascript" >
+
+        // const userName = document.getElementById('inputUserName');
+        // const password = document.getElementById("password");
+        // const loginSuccess = document.getElementById('loginSuccess');
+        // const loginPage = document.getElementById("loginPage");
+        // const nameErr = document.getElementById("name");
+        // const passwordErr = document.getElementById("passw")
+        // const dbName = ""
+
+        function showName (jsonData){
+            console.log(jsonData);
+            if(jsonData.jwtToken !== undefined){
+                console.log(userName.value)
+                localStorage.setItem(userName.value, JSON.stringify(jsonData));
+                document.getElementById("loginSuccess").textContent = "Welcom " + jsonData.name
+                loginPage.classList.add('d-none');
+                loginSuccess.classList.add('d-flex');
+            }else if (jsonData.user !== undefined){
+                nameErr.textContent = jsonData.user;
+            }else{
+                passwordErr.textContent = jsonData.password
+            }
+        }
+
+        function get() {
+            // let url = 'http://localhost:3005/1';
+            // fetch(url, options)
+            //     .then(function(response) {
+            //         return response.json()
+            //     })
+            //     .then(function(a) {
+            //         showName(a);
+            //     });    
+            // let data = {
+            //     username : userName.value,
+            //     password : password.value
+            // }
+
+            let data = {
+                name: "Rahul",
+                // gender: "Male",
+                username : "rahul123",
+                password : "rahul@123"
+            };
+
+            let options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                    // Accept: "application/json"
+                    // body: JSON.stringify(data)
+                },
+                body: JSON.stringify(data)
+            }
+
+            console.log(data)
+            console.log(options.body)
+                
+            // fetch('https://9947-110-235-224-86.ngrok-free.app/login/', options)
+            fetch('http://localhost:3002/user/', options)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(jsonData) {
+                // showName(jsonData)
+                console.log(jsonData)
+            });
+        }
+    </script>
+    
+</body>
+</html>

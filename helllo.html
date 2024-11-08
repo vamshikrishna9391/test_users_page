@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            padding: 0;
+            margin: 0;
+        }
+        .worning{
+            color: red;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+        .succes{
+            padding: 20px;
+            font-size: 20px;
+            color: green;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: bolder;
+        }
+        .d-none{
+            display: none !important;
+        }
+        .d-flex{
+            display: flex !important;
+        }
+
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: "roboto";
+        }
+
+        .main_div{
+            background-color: lightblue;
+            height: 100vh;
+            background-size: cover;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main_heading{
+            text-shadow: 2px 2px 2px #fff;
+            color: #000;
+        }
+
+        .card{
+            border-left: 0.5px solid rgb(0, 0, 0);
+            border-top: 1px solid #000;
+            background-color: #fff;
+            box-shadow: 2px 2px 2px;
+            border-radius: 10px;
+            padding: 10px;
+            padding-right: 12px;
+            /* max-width: 1000px; */
+            /* min-width: 300px; */
+            width: 45%;
+        }
+
+        @media (orientation: landscape) {
+            .card{
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .main_div{
+                display: flex;
+                padding: 20px;    
+            }
+            .main_heading{
+                font-size:19px ;
+            }
+            .card{
+                width: 100%;
+            }
+        }
+
+        @media (max-width:200px) {
+            .main_div{
+                width: 200px;
+            }
+            .card{
+                width: 200px;
+            }
+            
+        }
+
+        .elements{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .labelEl{
+            font-size: 14px;
+        }
+
+        .inputElement{
+            outline: none;
+
+            border: 1px solid;
+            border-radius: 2px;
+            width: 100%;
+            height: 25px;
+            font-size: 13px;
+            font-family: 'Times New Roman', Times, serif;
+
+            padding: 5px 0 5px 8px; 
+            box-sizing: border-box;
+        }
+
+        .btns{
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        .sub_btn{
+            border: 0;
+            background-color: blue;
+            border-radius: 4px;
+            padding: 6px;
+            font-size: 12px;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+
+        .ancherEl{
+            font-size: 10px;
+        }
+        .imgc{
+            width: 100%;
+            height: 100%;
+        }
+        #loginSuccess{
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main_div" id="loginPage">
+        <h1 class="main_heading">
+            LOGIN PAGE
+        </h1>
+        <div class="card">
+            <div class="elements">
+                <label class="labelEl" for="inputUserName">User Name</label>
+                <input type="text" class="inputElement" id="inputUserName" required>
+                <p class="worning" id="name"></p>
+            </div>
+            
+            <div class="elements">
+                <label class="labelEl" for="password">Password</label>
+                <input type="password" class="inputElement" id="password" required>
+                <p class="worning" id="passw"></p>
+            </div>
+            <div class="btns">
+                <button class="sub_btn" onclick="get()">Submit</button>
+                <!-- <a class="ancherEl" href="http://localhost:3002/createuser/">Create an account</a> -->
+                <a class="ancherEl" href="https://test-1-riqt.onrender.com/createuser/">Create an account</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginSuccess" class="d-none succes"></div>
+
+    <script type="text/javascript" >
+
+        const userName = document.getElementById('inputUserName');
+        const password = document.getElementById("password");
+        const loginSuccess = document.getElementById('loginSuccess');
+        const loginPage = document.getElementById("loginPage");
+        const nameErr = document.getElementById("name");
+        const passwordErr = document.getElementById("passw")
+        const dbName = ""
+
+        function showName (jsonData){
+            console.log(jsonData);
+            if(jsonData.jwtToken !== undefined){
+                console.log(userName.value)
+                localStorage.setItem(userName.value, JSON.stringify(jsonData));
+                if (jsonData.name === "Ga"){
+                    document.getElementById("loginSuccess").textContent = "Welcom " + jsonData.name + " Only for you!"
+
+                    let kitkatimg = document.createElement('img');
+                    kitkatimg.classList.add("imgc")
+                    // kitkatimg.src= "https://th.bing.com/th/id/R.9938362deb42f652c3d5726aa22fa946?rik=POGgyHH9HOe%2f6A&riu=http%3a%2f%2fcdn2.bigcommerce.com%2fserver5100%2fh711h5%2fproducts%2f982%2fimages%2f1757%2fkit_kat__91519.1485997572.1280.1280.png%3fc%3d2&ehk=vu6A%2bSKyZ5uKEl8qcmo7vWqMYRC8CAIUIbqGAx2MDBI%3d&risl=&pid=ImgRaw&r=0";
+                    kitkatimg.src= "https://th.bing.com/th/id/OIP.BpLnMLnqxq_2OMEFvI-A9QHaHB?rs=1&pid=ImgDetMain";
+                    document.getElementById("loginSuccess").appendChild(kitkatimg);
+
+                    let kitkatimg2 = document.createElement('img');
+                    kitkatimg2.classList.add("imgc")
+                    kitkatimg2.src= "https://th.bing.com/th/id/R.fabdab9fc4c2989dc77dbc429a744ccc?rik=5mqxCz63iDJ0kQ&riu=http%3a%2f%2fstatic.independent.co.uk%2fs3fs-public%2fthumbnails%2fimage%2f2016%2f01%2f20%2f12%2fKitKat-Four-finger.jpg&ehk=BPg6OmCApf8T8OVh1Cw9QDDbQqcU51C2u2ovb96Is34%3d&risl=&pid=ImgRaw&r=0";
+                    // document.getElementById("loginSuccess").appendChild(kitkatimg2);
+                }else{
+
+                    document.getElementById("loginSuccess").textContent = "Welcom " + jsonData.name
+                }
+                loginPage.classList.add('d-none');
+                loginSuccess.classList.add('d-flex');
+            }else if (jsonData.user !== undefined){
+                nameErr.textContent = jsonData.user;
+            }else{
+                passwordErr.textContent = jsonData.password
+            }
+        }
+
+        function get() {
+            // let url = 'http://localhost:3005/1';
+            // fetch(url, options)
+            //     .then(function(response) {
+            //         return response.json()
+            //     })
+            //     .then(function(a) {
+            //         showName(a);
+            //     });    
+            let data = {
+                username : userName.value,
+                password : password.value
+            }
+
+            // let data = {
+            //     name: "Rahul",
+            //     // gender: "Male",
+            //     username : "rahul123",
+            //     password : "rahul@123"
+            // };
+
+            let options = {
+                method: "POST",
+                
+                headers: {
+                    "Content-Type": "application/json"
+                    // 'Authorization': `Bearer ${token}`,
+                    // Accept: "application/json"
+                    // body: JSON.stringify(data)
+                },
+                body: JSON.stringify(data)
+            }
+
+            // console.log(data)
+            // console.log(options.body)
+                
+            fetch('https://test-1-riqt.onrender.com/login/', options)
+            // fetch('http://localhost:3002/user/', options)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(jsonData) {
+                showName(jsonData)
+                // console.log(jsonData)
+            });
+        }
+    </script>
+
+</body>
+</html>
