@@ -167,7 +167,8 @@
             <div class="btns">
                 <button class="sub_btn" onclick="get()">Submit</button>
                 <!-- <a class="ancherEl" href="http://localhost:3002/createuser/">Create an account</a> -->
-                <a class="ancherEl" href="https://test-1-riqt.onrender.com/createuser/">Create an account</a>
+                <!-- <a class="ancherEl" href="https://test-1-riqt.onrender.com/createuser/">Create an account</a> -->
+                <a class="ancherEl" href="https://test-users-page-1.onrender.com//createuser">Create an account</a>
             </div>
         </div>
     </div>
@@ -184,84 +185,56 @@
         const passwordErr = document.getElementById("passw")
         const dbName = ""
 
-        function showName (jsonData){
-            console.log(jsonData);
-            if(jsonData.jwtToken !== undefined){
-                console.log(userName.value)
-                localStorage.setItem(userName.value, JSON.stringify(jsonData));
-                if (jsonData.name === "Ga"){
-                    document.getElementById("loginSuccess").textContent = "Welcom " + jsonData.name + " Only for you!"
+        const retraveData = JSON.parse(localStorage.getItem("userDataInLocal"))
+        console.log(retraveData)
 
-                    let kitkatimg = document.createElement('img');
-                    kitkatimg.classList.add("imgc")
-                    // kitkatimg.src= "https://th.bing.com/th/id/R.9938362deb42f652c3d5726aa22fa946?rik=POGgyHH9HOe%2f6A&riu=http%3a%2f%2fcdn2.bigcommerce.com%2fserver5100%2fh711h5%2fproducts%2f982%2fimages%2f1757%2fkit_kat__91519.1485997572.1280.1280.png%3fc%3d2&ehk=vu6A%2bSKyZ5uKEl8qcmo7vWqMYRC8CAIUIbqGAx2MDBI%3d&risl=&pid=ImgRaw&r=0";
-                    kitkatimg.src= "https://th.bing.com/th/id/OIP.BpLnMLnqxq_2OMEFvI-A9QHaHB?rs=1&pid=ImgDetMain";
-                    document.getElementById("loginSuccess").appendChild(kitkatimg);
+        if ((retraveData === null) || (retraveData.isActive === 0)){
+            function showName (jsonData){
+                if(jsonData.jwtToken !== undefined){
+                    localStorage.setItem("userDataInLocal", JSON.stringify(jsonData));
+                    window.location.replace("https://test-users-page-1.onrender.com//chatpage");
 
-                    let kitkatimg2 = document.createElement('img');
-                    kitkatimg2.classList.add("imgc")
-                    kitkatimg2.src= "https://th.bing.com/th/id/R.fabdab9fc4c2989dc77dbc429a744ccc?rik=5mqxCz63iDJ0kQ&riu=http%3a%2f%2fstatic.independent.co.uk%2fs3fs-public%2fthumbnails%2fimage%2f2016%2f01%2f20%2f12%2fKitKat-Four-finger.jpg&ehk=BPg6OmCApf8T8OVh1Cw9QDDbQqcU51C2u2ovb96Is34%3d&risl=&pid=ImgRaw&r=0";
-                    // document.getElementById("loginSuccess").appendChild(kitkatimg2);
+                }else if (jsonData.user !== undefined){
+                    nameErr.textContent = jsonData.user;
                 }else{
-
-                    document.getElementById("loginSuccess").textContent = "Welcom " + jsonData.name
+                    passwordErr.textContent = jsonData.password
                 }
-                loginPage.classList.add('d-none');
-                loginSuccess.classList.add('d-flex');
-            }else if (jsonData.user !== undefined){
-                nameErr.textContent = jsonData.user;
-            }else{
-                passwordErr.textContent = jsonData.password
             }
+
+            function get() {
+                // let data = {
+                //     username : "vamshi123",
+                //     password : "vamshi@123"
+                // }
+                let data = {
+                    username : userName.value,
+                    password : password.value
+                }
+
+                let options = {
+                    method: "POST", 
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }
+                fetch('https://test-users-page-1.onrender.com//login/', options)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(jsonData) {
+                    showName(jsonData)
+                });
+            }
+
+        }else{
+            window.location.replace("https://test-users-page-1.onrender.com//chatpage");
+            // document.getElementById("loginSuccess").textContent = "Welcom " + retraveData.name
+            // loginPage.classList.add('d-none');
+            // loginSuccess.classList.add('d-flex');
+
         }
 
-        function get() {
-            // let url = 'http://localhost:3005/1';
-            // fetch(url, options)
-            //     .then(function(response) {
-            //         return response.json()
-            //     })
-            //     .then(function(a) {
-            //         showName(a);
-            //     });    
-            let data = {
-                username : userName.value,
-                password : password.value
-            }
-
-            // let data = {
-            //     name: "Rahul",
-            //     // gender: "Male",
-            //     username : "rahul123",
-            //     password : "rahul@123"
-            // };
-
-            let options = {
-                method: "POST",
-                
-                headers: {
-                    "Content-Type": "application/json"
-                    // 'Authorization': `Bearer ${token}`,
-                    // Accept: "application/json"
-                    // body: JSON.stringify(data)
-                },
-                body: JSON.stringify(data)
-            }
-
-            // console.log(data)
-            // console.log(options.body)
-                
-            fetch('https://test-1-riqt.onrender.com/login/', options)
-            // fetch('http://localhost:3002/user/', options)
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(jsonData) {
-                showName(jsonData)
-                // console.log(jsonData)
-            });
-        }
     </script>
-
 </body>
 </html>
